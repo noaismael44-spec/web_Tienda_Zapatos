@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zapatilla IA SECCIÓN 710</title>
+
+    <!-- Bootstrap 5.3.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Iconos de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --card-dark: #111726;
+            --blue-electric: #2563eb;
+            --blue-glow: #3b82f6;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(37, 99, 235, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.15), transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.08), transparent 40%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #ffffff;
+        }
+
+        .product-card {
+            width: 100%;
+            max-width: 1050px;
+            background: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px var(--border-glow);
+            transition: border-color 0.3s ease;
+        }
+
+        .product-card:hover {
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+
+        .left-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background: radial-gradient(circle, rgba(17, 23, 38, 0.5) 0%, rgba(9, 13, 22, 0.8) 100%);
+            position: relative;
+        }
+
+        /* Efecto de resplandor detrás de los tenis */
+        .left-display::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            background: var(--blue-electric);
+            filter: blur(80px);
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 440px;
+            cursor: zoom-in;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
+        }
+
+        .product-image:hover {
+            transform: scale(1.06) rotate(-2deg);
+        }
+
+        .right-info {
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .tag {
+            background: rgba(37, 99, 235, 0.15);
+            color: #60a5fa;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            width: fit-content;
+            margin-bottom: 15px;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 30%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .price-container {
+            margin-bottom: 25px;
+        }
+
+        .price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .colors {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .color-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .color {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid var(--card-dark);
+            outline: 2px solid transparent;
+        }
+
+        /* Indicador de color activo */
+        .color-wrapper.active .color {
+            outline-color: var(--blue-glow);
+            transform: scale(1.1);
+        }
+
+        .white  { background: #ffffff; }
+        .black  { background: #111111; }
+        .yellow { background: #facc15; }
+        .red    { background: #ef4444; }
+
+        .form-select-custom {
+            background-color: #1a2236;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .form-select-custom:focus {
+            background-color: #1a2236;
+            color: white;
+            border-color: var(--blue-glow);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-buy {
+            width: 100%;
+            margin-top: 30px;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            background: linear-gradient(90deg, #1d4ed8, #2563eb);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-buy:hover {
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.5);
+        }
+
+        .btn-buy:active {
+            transform: translateY(0);
+        }
+
+        /* Modales Estilizados */
+        .modal-content-custom {
+            background: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            color: white;
+        }
+
+        .btn-close-white {
+            filter: invert(1);
+            opacity: 0.7;
+        }
+
+        /* Animación del spinner de procesamiento de pago */
+        .spinner-payment {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.25em;
+            color: var(--blue-glow);
+        }
+
+        @media (max-width: 991px) {
+            .left-display { padding: 30px; }
+            .right-info { padding: 30px; }
+            .title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="product-card">
+    <div class="row g-0">
+        <!-- Panel Izquierdo: Imagen -->
+        <div class="col-lg-6 left-display">
+            <img id="mainImage" src="img/blanco.png" class="product-image" data-bs-toggle="modal" data-bs-target="#productModal" alt="Zapatilla IA">
+        </div>
+
+        <!-- Panel Derecho: Información -->
+        <div class="col-lg-6 right-info">
+            <div class="tag">NUEVA COLECCIÓN</div>
+            <h1 class="title">Zapatilla IA SECCIÓN 710</h1>
+            
+            <p class="description">
+                Diseño exclusivo conceptualizado mediante algoritmos avanzados de Inteligencia Artificial. 
+                Combina una ergonomía premium, texturas optimizadas de alto rendimiento y un estilo vanguardista adaptado al futuro urbano.
+            </p>
+
+            <div class="price-container">
+                <div class="price">$120.00 USD</div>
+            </div>
+
+            <!-- Selector de Colores -->
+            <h6 class="text-white uppercase mb-3 font-weight-bold" style="font-size: 0.85rem; letter-spacing: 0.5px;">
+                Seleccionar Color
+            </h6>
+            <div class="colors">
+                <div class="color-wrapper active" id="wrapper-blanco">
+                    <div class="color white" title="Blanco" onclick="changeImage('img/blanco.png', 'Blanco', 'wrapper-blanco')"></div>
+                </div>
+                <div class="color-wrapper" id="wrapper-negro">
+                    <div class="color black" title="Negro" onclick="changeImage('img/negro.png', 'Negro', 'wrapper-negro')"></div>
+                </div>
+                <div class="color-wrapper" id="wrapper-amarillo">
+                    <div class="color yellow" title="Amarillo" onclick="changeImage('img/amarillo.png', 'Amarillo', 'wrapper-amarillo')"></div>
+                </div>
+                <div class="color-wrapper" id="wrapper-rojo">
+                    <div class="color red" title="Rojo" onclick="changeImage('img/rojo.png', 'Rojo', 'wrapper-rojo')"></div>
+                </div>
+            </div>
+
+            <!-- Selector de Tallas -->
+            <h6 class="text-white mb-3" style="font-size: 0.85rem; letter-spacing: 0.5px;">
+                Seleccionar Talla US
+            </h6>
+            <select class="form-select form-select-custom mb-2" id="sizeSelect">
+                <option value="38">38 M (US 6)</option>
+                <option value="40" selected>40 M (US 7.5)</option>
+                <option value="42">42 M (US 9)</option>
+            </select>
+
+            <!-- Botón de Pago Activo -->
+            <button class="btn-buy" onclick="procesarPago()">
+                <i class="bi bi-credit-card-2-back-fill"></i> PROCEDER AL PAGO
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 1: Vista Ampliada de Imagen -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-content-custom">
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <img id="modalImage" src="img/blanco.png" style="max-width: 100%; max-height: 70vh; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));" alt="Vista ampliada">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 2: Pasarela de Pago Dinámica -->
+<div class="modal fade" id="checkoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-content-custom text-center p-4">
+            
+            <!-- Estado 1: Procesando -->
+            <div id="paymentProcessing">
+                <div class="spinner-border spinner-payment my-4" role="status"></div>
+                <h4 class="text-white font-weight-bold">Conectando con la pasarela...</h4>
+                <p class="text-muted px-3">Por favor no cierres ni refresques la pestaña, estamos validando tu transacción segura.</p>
+            </div>
+
+            <!-- Estado 2: Éxito (Oculto inicialmente) -->
+            <div id="paymentSuccess" style="display: none;">
+                <div class="my-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                </div>
+                <h3 class="text-white font-weight-bold mb-2">¡Pago Autorizado!</h3>
+                <p class="text-muted">Tu pedido de la <strong>Sección 710</strong> ha sido procesado con éxito.</p>
+                
+                <div class="p-3 my-3 rounded-3 text-start" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem;">
+                    <div class="mb-1"><strong>Producto:</strong> Zapatilla IA Edición Especial</div>
+                    <div class="mb-1"><strong>Color:</strong> <span id="summaryColor">Blanco</span></div>
+                    <div class="mb-1"><strong>Talla Seleccionada:</strong> EU <span id="summarySize">40</span></div>
+                    <div class="mt-2 pt-2 border-top border-secondary text-white d-flex justify-content-between">
+                        <span>Total Cargo:</span><strong>$120.00 USD</strong>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-outline-primary w-100 py-2.5 mt-2 rounded-3" data-bs-dismiss="modal" style="border-radius: 12px; font-weight: 600;">
+                    Entendido
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // Variables globales para rastrear la selección actual
+    let currentColorName = "Blanco";
+
+    function changeImage(imagePath, colorName, wrapperId) {
+        // Cambiar recursos de imagen
+        document.getElementById('mainImage').src = imagePath;
+        document.getElementById('modalImage').src = imagePath;
+        
+        // Actualizar nombre global del color
+        currentColorName = colorName;
+
+        // Alternar clase activa visualmente en los círculos
+        document.querySelectorAll('.color-wrapper').forEach(wrapper => {
+            wrapper.classList.remove('active');
+        });
+        document.getElementById(wrapperId).classList.add('active');
+    }
+
+    function procesarPago() {
+        // Obtener valores dinámicos
+        const selectedSize = document.getElementById('sizeSelect').value;
+        
+        // Inyectar datos en el resumen de éxito
+        document.getElementById('summaryColor').innerText = currentColorName;
+        document.getElementById('summarySize').innerText = selectedSize;
+
+        // Restablecer vistas del modal de pago
+        document.getElementById('paymentProcessing').style.display = "block";
+        document.getElementById('paymentSuccess').style.display = "none";
+
+        // Instanciar y abrir el modal usando Bootstrap API
+        const checkoutModalElement = document.getElementById('checkoutModal');
+        const checkoutModal = new bootstrap.Modal(checkoutModalElement);
+        checkoutModal.show();
+
+        // Simular retraso de pasarela de pago segura (2.5 segundos)
+        setTimeout(() => {
+            document.getElementById('paymentProcessing').style.display = "none";
+            document.getElementById('paymentSuccess').style.display = "block";
+        }, 2500);
+    }
+</script>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
